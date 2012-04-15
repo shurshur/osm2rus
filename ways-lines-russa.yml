@@ -1,0 +1,197 @@
+--- ways
+---
+
+
+# Railways
+- id: railway
+  condition:
+    - railway = rail
+    - service != siding|spur|yard
+  action:
+    - action: write_line
+      type: 0x14
+      level_h: 3
+
+- id: service_railway
+  condition:
+    - railway = rail
+    - service = siding|spur|yard
+  action:
+    - action: write_line
+      type: 0x14
+      level_h: 1
+
+- id: service_railway_err
+  condition:
+    - railway = siding|spur|yard
+  action:
+    - action: write_line
+      type: 0x14
+      level_h: 1
+
+- id: light_railway
+  condition:
+    - railway = narrow_gauge|light_rail
+  action:
+    - action: write_line
+      type: 0x14
+      level_h: 1
+
+
+
+# Water
+
+- condition:
+    - natural = coastline
+  action:
+    - action: load_coastline
+    - action: write_line
+      type: 0x15
+      level_h: 4
+
+- condition:
+    - waterway = stream
+  action:
+    - action: write_line
+      type: 0x18
+      level_h: 1
+
+- condition:
+    - waterway = canal
+  action:
+    - action: write_line
+      type: 0x1f
+      level_h: 2
+
+- condition:
+    - waterway = river
+  action:
+    - action: write_line
+      type: 0x1f
+      level_h: 3
+
+
+
+# Boundaries
+
+- condition:
+    - boundary = administrative
+    - admin_level = 2
+    - only_way
+  action:
+    - action: write_line
+      type: 0x1e
+      level_h: 4
+
+- condition:
+    - boundary = administrative
+    - admin_level = 4
+    - only_way
+  action:
+    - action: write_line
+      type: 0x1c
+      level_l: 2
+      level_h: 4
+
+- condition:
+    - boundary = administrative
+    - admin_level = 6
+    - only_way
+  action:
+    - action: write_line
+      type: 0x1d
+      level_l: 2
+      level_h: 3
+
+
+
+# The rest
+
+
+- condition:
+    - man_made = pipeline
+    - ~inside_city
+  action:
+    - action: write_line
+      type: 0x28
+      level_h: 2
+
+- condition:
+    - power = line
+  action:
+    - action: write_line
+      type: 0x29
+      level_h: 2
+
+# Navitel specific
+
+- condition:
+    - barrier = fence|hedge|wall
+  action:
+    - action: write_line
+      type: 0x46
+
+- condition:
+    - highway = footway
+    - footway != sidewalk
+    - area != yes
+  action:
+    - action: write_line
+      type: 0x16
+
+- condition:
+    - highway = construction
+  action:
+    - action: write_line
+      type: 0x00
+
+- condition:
+    - man_made = cutline
+  action:
+    - action: write_line
+      type: 0x48
+      level_h: 2
+
+- condition:
+    - natural = cliff
+  action:
+    - action: write_line
+      type: 0x22
+
+
+- condition:
+    - power = minor_line
+    - ~inside_city
+  action:
+    - action: write_line
+      type: 0x29
+
+- condition:
+    - railway = monorail
+  action:
+    - action: write_line
+      type: 0x40
+
+- condition:
+    -  railway = tram
+  action:
+    - action: write_line
+      type: 0x3f
+
+- condition:
+    -  railway = platform
+  action:
+    - action: write_line
+      type: 0x07
+
+- condition:
+    -  public_transport = platform
+  action:
+    - action: write_line
+      type: 0x07
+
+- condition:
+    -  pt = platform
+  action:
+    - action: write_line
+      type: 0x07

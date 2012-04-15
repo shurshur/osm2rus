@@ -1,0 +1,353 @@
+--- ways
+---
+
+# Settlements
+
+- condition:
+    - place = city
+  action:
+    - action: write_polygon
+      type: 0x01
+      level_l: 2
+      level_h: 4
+
+- condition:
+    - place = town
+  action:
+    - action: write_polygon
+      type: 0x02
+      level_l: 2
+      level_h: 3
+
+- condition:
+    - place = village|hamlet|farmyard
+  action:
+    - action: write_polygon
+      type: 0x03
+      level_l: 2
+      level_h: 2
+
+
+# Man-made
+
+- condition:
+    - amenity = prison
+  action:
+    - action: write_polygon
+      type: 0x04
+      level_h: 1
+
+
+- condition:
+    - amenity = parking
+  action:
+    - action: write_polygon
+      type: 0x05
+      level_h: 1
+
+- condition:
+    - landuse = garages
+  action:
+    - action: write_polygon
+      type: 0x06
+      level_h: 1
+
+- condition:
+    - amenity = garage|parking_garage
+  action:
+    - action: write_polygon
+      type: 0x06
+
+- condition:
+    - aeroway = terminal
+  action:
+    - action: write_polygon
+      type: 0x07
+
+- condition:
+    - landuse = commercial|retail
+  action:
+    - action: write_polygon
+      type: 0x08
+      level_l: 1
+      level_h: [ 0, 0.01, 0.2 ]
+
+- condition:
+    - shop = mall|supermarket
+    - landuse != commercial|retail
+  action:
+    - action: write_polygon
+      type: 0x08
+      level_h: 1
+
+- condition:
+    - amenity = college|kindergarten|school|university
+    - building != *
+  action:
+    - action: write_polygon
+      type: 0x0a
+      level_h: 1
+
+- condition:
+    - amenity = hospital
+    - building != *
+  action:
+    - action: write_polygon
+      type: 0x0b
+      level_h: [ 0, 0.01 ]
+
+- condition:
+    - or:
+        - landuse = industrial
+        - power = generator|station
+  action:
+    - action: write_polygon
+      type: 0x0c
+      level_l: 1
+      level_h: [ 0, 0.01, 0.2 ]
+
+- condition:
+    - building = *
+    - building != no|factory|industrial|manufacture|apartments|dormitory|house|hut|residential|administrative|office|garage|garages|parking
+    - amenity != *
+    - man_made != works
+    - office != *
+  action:
+    - action: write_polygon
+      type: 0x13
+
+- condition:
+    - building = apartments|dormitory|house|hut|residential
+  action:
+    - action: write_polygon
+      type: 0x6c
+
+- condition:
+    - building = administrative|office
+  action:
+    - action: write_polygon
+      type: 0x6d
+
+- condition:
+    - building = garage|garages|parking
+  action:
+    - action: write_polygon
+      type: 0x06
+
+- condition:
+    - building = yes
+    - amenity = bank|police|post_office|prison|townhall
+  action:
+    - action: write_polygon
+      type: 0x6d
+
+- condition:
+    - building = yes
+    - office = *
+  action:
+    - action: write_polygon
+      type: 0x6d
+
+- condition:
+    - building = yes
+    - amenity = *
+    - amenity != bank|police|post_office|prison|townhall|garage|parking_garage
+  action:
+    - action: write_polygon
+      type: 0x6e
+
+- condition:
+    - building = factory|industrial|manufacture
+  action:
+    - action: write_polygon
+      type: 0x6f
+
+- condition:
+    - man_made = works
+  action:
+    - action: write_polygon
+      type: 0x6f
+
+- condition:
+    - leisure = common|garden|park
+  action:
+    - action: write_polygon
+      type: 0x17
+      level_h: 1
+
+- condition:
+    - landuse = farm|farmland|meadow
+  action:
+    - action: write_polygon
+      type: 0x88
+      level_h: 2
+
+- condition:
+    - landuse = grass
+  action:
+    - action: write_polygon
+      type: 0x95
+      level_h: 2
+
+- condition:
+    - natural = heath
+  action:
+    - action: write_polygon
+      type: 0x95
+      level_h: 2
+
+- condition:
+    - leisure = stadium|pitch
+    - named
+  action:
+    - action: write_polygon
+      type: 0x19
+      level_h: 1
+
+- condition:
+    - leisure = stadium|pitch
+    - ~named
+  action:
+    - action: write_polygon
+      type: 0x19
+      level_h: [ 0, 0.002 ]
+
+- condition:
+    - sport = *
+    - leisure != *
+  action:
+    - action: write_polygon
+      type: 0x19
+
+- condition:
+    - landuse = cemetery
+  action:
+    - action: write_polygon
+      type: 0x1a
+      level_h: 1
+
+- condition:
+    - landuse = vineyard
+  action:
+    - action: write_polygon
+      type: 0x86
+      level_h: 1
+
+
+# Natural
+
+- condition:
+    - natural = water
+  action:
+    - action: write_polygon
+      type: 0x3f
+      level_h: [ 0, 0.016, 0.5, 2.5, 9 ]
+
+- condition:
+    - landuse = basin|reservoir
+  action:
+    - action: write_polygon
+      type: 0x3f
+      level_h: [ 0, 0.016, 0.5, 2.5, 9 ]
+
+- condition:
+    - waterway = riverbank
+  action:
+    - action: write_polygon
+      type: 0x47
+      level_h: [ 0, 0.016, 0.5, 2.5, 9 ]
+
+- condition:
+    - leisure = ice_rink
+  action:
+    - action: write_polygon
+      type: 0x4d
+
+- condition:
+    - natural = glacier
+  action:
+    - action: write_polygon
+      type: 0x4d
+      level_h: [ 0, 0.016, 0.5, 2.5, 9 ]
+
+- condition:
+    - landuse = allotments
+  action:
+    - action: write_polygon
+      type: 0x4e
+      level_h: 2
+
+- condition:
+    - natural = scrub
+  action:
+    - action: write_polygon
+      type: 0x4f
+      level_h: [ 0, 0.016, 0.5, 2.5, 9 ]
+
+- condition:
+    - landuse = forest
+  action:
+    - action: write_polygon
+      type: 0x50
+      level_h: 3
+
+- condition:
+    - landuse = forest
+    - burnt = *
+  action:
+    - action: write_polygon
+      type: 0x84
+      level_h: 3
+
+- condition:
+    - natural = wood
+  action:
+    - action: write_polygon
+      type: 0x50
+      level_h: 3
+
+- condition:
+    - natural = wood
+    - burnt = *
+  action:
+    - action: write_polygon
+      type: 0x84
+      level_h: 3
+
+- condition:
+    - natural = marsh|wetland
+    - wetland != swamp
+  action:
+    - action: write_polygon
+      type: 0x51
+      level_h: [ 0, 0.016, 0.5, 2.5, 9 ]
+
+- condition:
+    - natural = wetland
+    - wetland = swamp
+  action:
+    - action: write_polygon
+      type: 0x81
+      level_h: [ 0, 0.016, 0.5, 2.5, 9 ]
+
+- condition:
+    - highway = *
+    - area = yes
+  action:
+    - action: write_polygon
+      type: 0x6a
+      level_h: [ 0, 0.002 ]
+
+- condition:
+    - natural = beach
+  action:
+    - action: write_polygon
+      type: 0x89
+      level_h: [ 0, 0.016, 0.5, 2.5, 9 ]
+
+- condition:
+    - landuse = quarry
+  action:
+    - action: write_polygon
+      type: 0x8a
+      level_h: [ 0, 0.016, 0.5, 2.5, 9 ]
